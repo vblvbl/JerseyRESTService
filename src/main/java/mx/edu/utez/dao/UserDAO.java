@@ -1,5 +1,6 @@
 package mx.edu.utez.dao;
 
+import com.google.gson.Gson;
 import mx.edu.utez.model.User;
 import mx.edu.utez.util.MySQLConnection;
 import org.apache.logging.log4j.LogManager;
@@ -76,6 +77,29 @@ public class UserDAO {
         }
 
         return user;
+    }
+
+    public boolean updateUser(User user) {
+        User foundUser = getUserByID(user.getId());
+        boolean result = false;
+
+        if (foundUser == null) {
+            return result;
+        }
+
+        try {
+            try (Connection connection = MySQLConnection.getConnection()) {
+                PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_BY_ID);
+                preparedStatement.setString(1, user.getName());
+                preparedStatement.setString(2, user.getLastname());
+                preparedStatement.setInt(3, user.getId());
+                result = preparedStatement.executeUpdate() != 0;
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+        }
+
+        return result;
     }
 
     public boolean deleteUser(int id) {

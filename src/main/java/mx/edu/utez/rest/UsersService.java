@@ -50,4 +50,17 @@ public class UsersService {
 
         return gson.toJson(result);
     }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public String updateUser(@FormParam("id") int id, @FormParam("name") String name, @FormParam("lastname") String lastname) {
+        User user = new User();
+        user.setId(id);
+        user.setName(name);
+        user.setLastname(lastname);
+
+        boolean result = userDAO.updateUser(user);
+
+        return gson.toJson(result);
+    }
 }
