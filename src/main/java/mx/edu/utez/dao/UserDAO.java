@@ -1,6 +1,5 @@
 package mx.edu.utez.dao;
 
-import com.google.gson.Gson;
 import mx.edu.utez.model.User;
 import mx.edu.utez.util.MySQLConnection;
 import org.apache.logging.log4j.LogManager;
